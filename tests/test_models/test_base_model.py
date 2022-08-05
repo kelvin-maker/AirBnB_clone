@@ -38,15 +38,8 @@ class TestBaseModel(TestCase):
         # time updates
         old_ctm = obj.created_at
         old_utm = obj.updated_at
-        sleep(0.01)
         obj.save()
-        self.assertEqual(old_ctm, obj.created_at)
-        self.assertNotEqual(old_utm, obj.updated_at)
-
-        old_ctm = obj.created_at
-        old_utm = obj.updated_at
         sleep(0.01)
-        obj.save()
         self.assertEqual(old_ctm, obj.created_at)
         self.assertNotEqual(old_utm, obj.updated_at)
 
@@ -54,9 +47,27 @@ class TestBaseModel(TestCase):
                          {'__class__': 'BaseModel', 'id': obj.id,
                           'created_at': obj.created_at.isoformat(),
                           'updated_at': obj.updated_at.isoformat()})
+
+    def test_4(self):
+        ''' task 4 tests '''
+        # args ignorance
+        obj = BaseModel(1, 2, 3, 'kk')
+        self.assertTrue(type(getattr(obj, 'id', None) is str) and
+                        UUID(obj.id))
+
         now = datetime.utcnow()
         obj_dict = {'id': str(uuid4()), 'created_at': now.isoformat(),
                     'updated_at': now.isoformat(), '__class__': 'BaseModel'}
+        
+        # kwargs parsing
+        obj = BaseModel(**obj_dict)
+        self.assertEqual(obj.id, obj_dict['id'])
+        # datetime parsing
+        self.assertEqual(obj.created_at, now)
+        self.assertEqual(obj.updated_at, now)
+        # __class__ should not be added as an attribute
+        self.assertFalse('__class__' in obj.__dict__)
+
         
         # same objects creation
         self.assertEqual(obj.to_dict(), BaseModel(**obj_dict).to_dict())
@@ -78,14 +89,7 @@ class TestBaseModel(TestCase):
         # time updates
         old_ctm = obj.created_at
         old_utm = obj.updated_at
-        sleep(0.01)
         obj.save()
-        self.assertEqual(old_ctm, obj.created_at)
-        self.assertNotEqual(old_utm, obj.updated_at)
-
-        old_ctm = obj.created_at
-        old_utm = obj.updated_at
         sleep(0.01)
-        obj.save()
         self.assertEqual(old_ctm, obj.created_at)
         self.assertNotEqual(old_utm, obj.updated_at)

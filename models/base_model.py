@@ -8,15 +8,13 @@ from datetime import datetime
 from uuid import uuid4
 from . import storage
 
-isoformat = "%Y-%m-%dT%H:%M:%S.%f" 
-
 class BaseModel:
     ''' class of the base model that everyhting else is inheriting from'''
     def __init__(self, *args, **kwargs):
         if kwargs:
             for k in kwargs:
                 if k in ['created_at', 'updated_at']:
-                    setattr(self, k, datetime.strptime(kwargs[k], isoformat))
+                    setattr(self, k, datetime.fromisoformat(kwargs[k]))
                 elif k != '__class__':
                     setattr(self, k, kwargs[k])
 
@@ -49,9 +47,4 @@ class BaseModel:
         '''
         returns a string representation of the model when an instance is created
         '''
-<<<<<<< HEAD
         return '[{}] [{}] {}'.format(self.__class__.__name__, self.id, self.__dict__)
-=======
-        
-        return '[{}] [{}] {}'.format(self.__class__.__name__, self.id, self.__dict__)
->>>>>>> 16d8a85b97e5bbeda390b8e85dd05911de026785
