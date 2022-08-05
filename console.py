@@ -10,6 +10,7 @@ import shlex
 import re
 import ast
 from models.__init__ import storage
+from models.base_model import BaseModel
 
 class HBNBCommand(cmd.Cmd):
     """condole characteristics and commands"""
