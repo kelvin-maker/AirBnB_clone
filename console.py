@@ -3,7 +3,6 @@
 console main file
 """
 import cmd
-#from cmd import Cmd
 import models
 import sys
 import shlex
