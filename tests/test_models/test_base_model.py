@@ -1,7 +1,4 @@
 #!/usr/bin/python3
-
-#please look through the unitest again; I was already stressed when i did this
-
 ''' 
 module for base_model tests 
 '''
@@ -67,7 +64,6 @@ class TestBaseModel(TestCase):
         self.assertEqual(obj.updated_at, now)
         # __class__ should not be added as an attribute
         self.assertFalse('__class__' in obj.__dict__)
-
         
         # same objects creation
         self.assertEqual(obj.to_dict(), BaseModel(**obj_dict).to_dict())
@@ -77,7 +73,6 @@ class TestBaseModel(TestCase):
         del obj_dict['__class__']
         BaseModel(**obj_dict)  # no execption raised
 
-        ##
         # normal creation in kwargs absence
         obj = BaseModel()
         self.assertTrue(type(getattr(obj, 'id', None) is str) and
