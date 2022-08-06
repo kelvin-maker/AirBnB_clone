@@ -10,10 +10,29 @@ import re
 import ast
 from models.__init__ import storage
 from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
+
 
 class HBNBCommand(cmd.Cmd):
     """condole characteristics and commands"""
-    prompt = "(hbnb)"
+    prompt = "(hbnb)" if sys.__stdin__.isatty() else ''
+    # available classes that can be created
+    classes = {
+               'BaseModel': BaseModel, 'User': User, 'Place': Place,
+               'State': State, 'City': City, 'Amenity': Amenity,
+               'Review': Review
+              }
+
+    attr_types = {
+             'number_rooms': int, 'number_bathrooms': int,
+             'max_guest': int, 'price_by_night': int,
+             'latitude': float, 'longitude': float
+            }
 
     def console_create(self, arg):
         ''' creates a new instance of the class passed as argument
