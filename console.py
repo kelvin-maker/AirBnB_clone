@@ -38,12 +38,12 @@ class HBNBCommand(cmd.Cmd):
         """added code to exit console"""
         print("Bye")
         return True
+    def do_EOF(self, inp):
+        """added code to exit console"""
+        print("Bye")
+        return True
 
-    def do_add(self, inp):
-        """added code to add stuff"""
-        print("Adding '{}'".format(inp))
-        
-    def console_create(self, arg):
+    def do_create(self, arg):
         ''' creates a new instance of the class passed as argument
             and saves it to the json storage file
         '''
@@ -62,7 +62,7 @@ class HBNBCommand(cmd.Cmd):
         print("creates a new instance of the class passed as argument")
         print("[Usage]: create <className>\n")
 
-    def console_show(self, arg):
+    def do_show(self, arg):
         ''' prints the string representation of an instance
             based on the class name and id
         '''
@@ -94,7 +94,7 @@ class HBNBCommand(cmd.Cmd):
         print("prints the string representation of an instance")
         print("[Usage]: show <className> <objectId>\n")
 
-    def console_destroy(self, arg):
+    def do_destroy(self, arg):
         ''' Deletes an instance based on the class name and id
             and saves the change into the JSON Storage file
         '''
@@ -128,7 +128,7 @@ class HBNBCommand(cmd.Cmd):
         print("Deletes an instance based on the class name and id")
         print("[Usage]: destroy <className> <objectId>\n")
 
-    def console_all(self, arg):
+    def do_all(self, arg):
         ''' Prints all string representation of all instances
             based or not on the class name.
         '''
@@ -155,7 +155,7 @@ class HBNBCommand(cmd.Cmd):
         print("based or not on the class name")
         print("[Usage]: all <className>\n")
 
-    def console_update(self, arg):
+    def do_update(self, arg):
         '''  Updates an instance based on the class name
             and id by adding or updating attribute and saves
             the change into the JSON Storage file
