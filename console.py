@@ -19,7 +19,7 @@ from models.review import Review
 
 
 class HBNBCommand(cmd.Cmd):
-    """condole characteristics and commands"""
+    """console characteristics and commands"""
     prompt = "(hbnb)" if sys.__stdin__.isatty() else ''
     # available classes that can be created
     classes = {
@@ -33,7 +33,16 @@ class HBNBCommand(cmd.Cmd):
              'max_guest': int, 'price_by_night': int,
              'latitude': float, 'longitude': float
             }
+    
+    def do_exit(self, inp):
+        """added code to exit console"""
+        print("Bye")
+        return True
 
+    def do_add(self, inp):
+        """added code to add stuff"""
+        print("Adding '{}'".format(inp))
+        
     def console_create(self, arg):
         ''' creates a new instance of the class passed as argument
             and saves it to the json storage file
@@ -216,6 +225,8 @@ class HBNBCommand(cmd.Cmd):
         """ prints Documentation for the update command """
         print("Updates an object's attributes")
         print("Usage: update <className> <id> <attName> <attVal>\n")
+
+HBNBCommand().cmdloop()
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
