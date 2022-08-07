@@ -33,15 +33,127 @@ class HBNBCommand(cmd.Cmd):
              'max_guest': int, 'price_by_night': int,
              'latitude': float, 'longitude': float
             }
-    
-    def do_exit(self, inp):
-        """added code to exit console"""
-        print("Bye")
-        return True
-    def do_EOF(self, inp):
-        """added code to exit console"""
-        print("Bye")
-        return True
+    def preloop(self):
+        """Prints the prompt when isatty is false"""
+        if not sys.__stdin__.isatty():
+            print('(hbnb)')
+
+    def precmd(self, line):
+        """This function gets the line before it gets processed
+        and here we can reformat command line for the dot.command syntax.
+        Usage: <class name>.<command>([<id> [<*args> or <**kwargs>]])
+        (Brackets denote optional fields in usage example.)
+        """
+        cmd = cls = id = args = new_line = ''
+
+        # check if the line has normal commands and
+        # dosen't need reformatting
+        if not ('.' in line and '(' in line and ')' in line):
+            splt_line = shlex.split(line)
+            if len(splt_line) > 3:
+                final_line = '{} {} {} {}'.format(splt_line[0],
+                                                  splt_line[1],
+                                                  splt_line[2],
+                                                  ' '.join(
+                                                           ('"' + r + '"')
+                                                           for r in
+                                                           splt_line[3:]
+                                                           ))
+            else:
+                return line
+        # use this string as a refernece to the regex
+        # User.update(id, {"first_name":"elmahdi", "email":"test@alx.com"})
+        # this finds the class name from the start
+        # of the line to the first dot it encounters [User.]
+        cls = re.search(r".+?\.", line)
+        # this finds the command from the first
+        # dot it encounters to the first left brace [.update(]
+        cmd = re.search(r"\..+?\(", line)
+        # checking if one of them is not found then syntax is wrong
+        if not cls or not cmd:
+            # so i just return the line as it is and the
+            # cmd class will return a syntax error
+            return line
+
+        cls = cls.group(0)[:-1]  # changing [User.] to [User]
+        cmd = cmd.group(0)[1:-1]  # changing [.update(] to [update]
+        # this searchs for the id in both cases where
+        # there will be just the id as arguments like
+        # User.show(id)
+        # and when there is more arguments after the id
+        # like in the update function
+        id = re.search(r"\(.+?\,|\(.+?\)", line)  # finds [(id,]
+        if id:
+            id = id.group(0)[1:-1]  # change [(id,] to [id]
+        else:
+            # if not found make it empty string
+            # because this will be used later
+            id = ''
+
+        # this finds the rest of arguments either are normal arguments
+        # or a dictionary they will always be between a comman "," and a ")"
+        # this find [, {"first_name":"elmahdi", "email":"test@alx.com"})]
+        args = re.search(r",.+?\)", line)
+        evl_dict = ''
+        if args:
+            # change [, {"first_name":"elmahdi", "email":"test@alx.com"})]
+            # to [{"first_name":"elmahdi", "email":"test@alx.com"}]
+            args = args.group(0)[1:-1].strip()
+            try:
+                # trying to cast it to a dict
+                evl_dict = ast.literal_eval(args)
+            except Exception:
+                pass  # means it's not a dict
+            # if not dict so args are normal args separated with commas
+            if not isinstance(evl_dict, dict):
+                # i split on commas and join them back with space
+                args = ' '.join(args.split(','))
+        # if nor arguments found by the regex means there is not args
+        else:
+            # store an empty string in it cuz this var will be used later
+            args = ''
+        # refomating the line to the normal way
+        new_line = "{} {} {} {}".format(cmd,
+                                        cls.strip("\"'"),
+                                        id.strip("\"'"),
+                                        args)
+        # so this
+        # User.update(id, {"first_name":"elmahdi", "email":"test@alx.com"})
+        # will become this
+        # update User id {"first_name":"elmahdi", "email":"test@alx.com"}
+        return new_line
+
+    def postcmd(self, stop, line):
+        """Prints the prompt when isatty is false"""
+        if not sys.__stdin__.isatty():
+            print('(hbnb) ', end='')
+        return stop
+
+    def emptyline(self):
+        ''' overrides the bhavior of an empty line'''
+        pass
+
+    def do_quit(self, arg):
+        '''method for the quit command'''
+        exit()
+
+    def help_quit(self):
+        '''prints the documentation for the command quit'''
+        print("Quit command to exit the program\n")
+
+    def do_EOF(self, arg):
+        '''method that handles the EOF and exit the program'''
+        print()
+        exit()
+
+    def help_EOF(self):
+        """ Prints the documentation for EOF """
+        print("The EOF exits the program\n")
+
+    #def do_exit(self, inp):
+     #   """added code to exit console"""
+      #  print("Bye")
+       # return True
 
     def do_create(self, arg):
         ''' creates a new instance of the class passed as argument
@@ -226,8 +338,5 @@ class HBNBCommand(cmd.Cmd):
         print("Updates an object's attributes")
         print("Usage: update <className> <id> <attName> <attVal>\n")
 
-HBNBCommand().cmdloop()
-
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
-

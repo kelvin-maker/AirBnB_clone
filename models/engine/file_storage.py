@@ -20,7 +20,13 @@ def reload(self):
 
 
 class FileStorage:
-    ''' class for persistent storage '''
+    ''' 
+    class for persistent storage
+    Represent an abstracted storage engine.
+    Attributes:
+        __file_path (str): The name of the file to save objects to.
+        __objects (dict): A dictionary of instantiated objects.
+     '''
     __file_path = 'file.json'
     __objects = {}
     reload = reload
@@ -30,7 +36,10 @@ class FileStorage:
         pass
 
     def all(self):
-        ''' gets all objects '''
+        ''' 
+        gets all objects 
+        Return the dictionary __objects
+        '''
         return self.__objects
 
     def new(self, obj):
@@ -39,7 +48,7 @@ class FileStorage:
         self.__objects[key] = obj
 
     def save(self):
-        ''' saves all objects to a file '''
+        ''' Serialize __objects to the JSON file __file_path '''
         with open(self.__file_path, 'w') as file:
             r_objs = self.__objects
             objs = {}

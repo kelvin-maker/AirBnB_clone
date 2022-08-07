@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-''' module for user tests '''
+''' unittest for user.py '''
 from unittest import TestCase
 import json
 import re
