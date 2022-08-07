@@ -12,7 +12,12 @@ import os
 from io import StringIO
 
 from models import storage
+from models.amenity import Amenity
 from models.base_model import BaseModel
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
 from models.user import User
 from models.engine.file_storage import FileStorage
 from console import HBNBCommand
@@ -36,9 +41,7 @@ class TestHBNBCommand(TestCase):
         sio = StringIO()
         with patch('sys.stdout', new=sio) as f:
             app = HBNBCommand()
-
-            # TODO: help, quit and EOF validation
-            # help not empty
+            #help, quit and EOF validation
             app.onecmd("help")
             self.assertTrue(sio.getvalue())
 
@@ -55,7 +58,6 @@ class TestHBNBCommand(TestCase):
             app = HBNBCommand()
 
             # create
-            # no arg
             clio(sio)
             app.onecmd("create")
             self.assertEqual(sio.getvalue(), "** class name missing **\n")
@@ -96,9 +98,6 @@ class TestHBNBCommand(TestCase):
             self.assertTrue(kid in storage.all())
             self.assertEqual(obj.to_dict(), storage.all()[kid].to_dict())
 
-            ##
-            ##
-            ##
             ##
             # show
             # missing model
@@ -156,7 +155,6 @@ class TestHBNBCommand(TestCase):
             app.onecmd("show BaseModel {}".format(obj.id))
             self.assertEqual(sio.getvalue(), str(obj)+'\n')
 
-            # ## ???
             # clio(sio)
             # obj.id=str(uuid4())
             # key = 'BaseModel.{}'.format(obj.id)
@@ -177,10 +175,6 @@ class TestHBNBCommand(TestCase):
             app.onecmd("show ABC {}".format(str(uuid4())))  # invalid id
             self.assertEqual(sio.getvalue(), "** class doesn't exist **\n")
 
-            ##
-            ##
-            ##
-            ##
             # destroy
             # missing model
             clio(sio)
