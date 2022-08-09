@@ -9,6 +9,7 @@ import re
 from uuid import UUID, uuid4
 from datetime import datetime
 from time import sleep
+import os
 from models.base_model import BaseModel
 
 class TestBaseModel(TestCase):
