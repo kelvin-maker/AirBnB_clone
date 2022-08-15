@@ -53,8 +53,8 @@
   min-width: 60px;
   align-items: center;
   justify-content: center;
-  position: absolute;
-  margin-left: 160px;
+  position: relative;
+  margin-left: 150px;
 }
 
 .places div.information {
