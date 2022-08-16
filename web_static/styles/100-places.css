@@ -1,0 +1,150 @@
+.places{
+  text-align: center;
+}
+
+.places h1 {
+  font-size: 30px;
+  text-align: left;
+}
+
+.places ul {
+  list-style: none;
+  margin-bottom: 60x;
+}
+
+.places h2 {
+  display: inline-block;
+  font-size: 30px;
+  margin-top: 0;
+}
+
+.places li {
+  border: 1px solid #FF5A5F;
+  border-radius: 4px;
+  display: inline-flex;
+  justify-content: center;
+  margin: 20px;
+  padding: 20px;
+  width: 390px;
+}
+
+.places div.house {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.places div.h2 {
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+}
+
+.places div.price_by_night {
+  border: 4px solid #FF5A5F;
+  border-radius: 50%;
+  color: #FF5A5F;
+  display: flex;
+  font-size: 30px;
+  width: 60px;
+  height: 60px;
+  min-width: 60px;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-left: 150px;
+}
+
+.places div.information {
+  border-bottom: 1px solid #DDDDDD;
+  border-top: 1px solid #DDDDDD;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+}
+
+.places div.information div.max_guest,
+.places div.information div.number_rooms ,
+.places div.information div.number_bathrooms {
+  background-repeat: no-repeat;
+  background-position: top center;
+  padding-top: 40px;
+  width: 100px;
+}
+
+.places div.information div.max_guest {
+  background-image: url("../images/icon_group.png");
+}
+
+.places div.information div.number_rooms {
+  background-image: url("../images/icon_bed.png");
+}
+
+.places div.information div.number_bathrooms {
+  background-image: url("../images/icon_bath.png");
+}
+
+
+.places div.user,
+.places div.description {
+  text-align: left;
+}
+
+.places div.user {
+  margin-top: 15px;
+}
+.places div.amenities {
+    text-align: left;
+    font-size: 16px;
+    margin-top: 40px;
+    border-bottom: #DDDDDD 1px;
+}
+.places div.amenities ul.lst{
+    padding: 0px;
+    width: 0px;
+}
+
+.places div.amenities li.a1,
+.places div.amenities li.a2,
+.places div.amenities li.a3{
+    background-repeat: no-repeat;
+    background-position: left;
+    padding-left: 60px;
+    padding-bottom: 7px;
+    padding-top: 7px;
+    margin: 10;
+    width: 10px;
+    position: relative;
+    text-align: left;
+    list-style: none;
+    justify-content: left;
+    display: inline-flex;
+    
+}
+
+
+
+
+.places div.amenities li{
+    
+ 
+    position: relative;  
+    border: #DDDDDD;
+   
+    list-style: none;
+
+}
+.places div.amenities li.a1{
+    background-image: url("../images/icon_pets.png");
+   
+}
+.places div.amenities li.a2{
+    background-image: url("../images/icon_tv.png");
+   
+}
+.places div.amenities li.a3{
+    background-image: url("../images/icon_wifi.png");
+   
+}
